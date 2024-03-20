@@ -8,7 +8,6 @@ import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
-import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
@@ -27,19 +26,17 @@ import javax.sql.DataSource;
 @EnableBatchProcessing
 public class BatchConfig {
     private final String[] FIELD_NAMES = new String[]{
-            "ID","City","Date","Season",
-            "MatchNumber","Team1","Team2",
-            "Venue","TossWinner","TossDecision",
-            "SuperOver","WinningTeam","WonBy",
-            "Margin","method","Player_of_Match",
-            "Team1Players","Team2Players",
-            "Umpire1","Umpire2"
+            "ID","city","date","season",
+            "match_Number","team1","team2","venue","toss_Winner",
+            "toss_Decision","super_Over","winning_Team",
+            "won_By,margin","player_Of_Match",
+            "team1_Players","team2_Players","umpire1","umpire2"
     };
     @Bean
     public FlatFileItemReader<MatchInput> reader() {
         return new FlatFileItemReaderBuilder<MatchInput>()
                 .name("MatchItemReader")
-                .resource(new ClassPathResource("IPL_Matches_2008_2022Data.csv"))
+                .resource(new ClassPathResource("IPL_Matches_Data.csv"))
                 .delimited()
                 .names(FIELD_NAMES)
                 .fieldSetMapper(new BeanWrapperFieldSetMapper<MatchInput>() {
@@ -58,8 +55,8 @@ public class BatchConfig {
     public JdbcBatchItemWriter<Match> writer(DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<Match>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-                .sql("INSERT INTO match(ID,city,date,season,match_Number,team1,team2,venue,toss_Winner,toss_Decision,super_Over,winning_Team,won_By,margin,player_Of_Match,team1_Players,team2_Players,umpire1,umpire2) "+
-                        "VALUES (:Id,:city,:date,:season,:matchNumber,:team1,:team2,:venue,:tossWinner,:tossDecision,:superOver,:winningTeam,:wonBy,:margin,:playerOfMatch,:team1Players,:team2Players,:umpire1,:umpire2)")
+                .sql("INSERT INTO match(Id, city, date, season, matchNumber, team1, team2, venue, tossWinner, tossDecision, superOver, winningTeam, wonBy, margin, playerOfMatch, team1Players, team2Players, umpire1, umpire2) " +
+                        "VALUES (:id, :city, :date, :season, :matchNumber, :team1, :team2, :venue, :tossWinner, :tossDecision, :superOver, :winningTeam, :wonBy, :margin, :playerOfMatch, :team1Players, :team2Players, :umpire1, :umpire2)")
                 .dataSource(dataSource)
                 .beanMapped()
                 .build();
