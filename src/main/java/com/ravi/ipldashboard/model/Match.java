@@ -14,24 +14,24 @@ import java.time.LocalDate;
 @Setter
 public class Match {
     @Id
-    private Long Id;
-    private String city;
-    private LocalDate date;
-    private String season;
-    private String matchNumber;
-    private String team1;
-    private String team2;
-    private String venue;
-    private String tossWinner;
-    private String tossDecision;
-    private String superOver;
-    private String winningTeam;
-    private String wonBy;
-    private String margin;
-    private String playerOfMatch;
-    private String team1Players;
-    private String team2Players;
-    private String umpire1;
-    private String umpire2;
+    private Long ID;
+    private String City;
+    private LocalDate Date;
+    private String Season;
+    private String MatchNumber;
+    private String Team1;
+    private String Team2;
+    private String Venue;
+    private String TossWinner;
+    private String TossDecision;
+    private String SuperOver;
+    private String WinningTeam;
+    private String WonBy;
+    private String Margin;
+    private String Player_of_Match;
+    private String Team1Players;
+    private String Team2Players;
+    private String Umpire1;
+    private String Umpire2;
 
 }

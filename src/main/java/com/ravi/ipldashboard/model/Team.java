@@ -30,4 +30,7 @@ public class Team {
                 ", totalMatches=" + totalMatches +
                 '}';
     }
+
+    public Team() {
+    }
 }

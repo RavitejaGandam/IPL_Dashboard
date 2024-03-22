@@ -33,13 +33,13 @@ public class JobCompletionNotificationListener implements JobExecutionListener {
         if (jobExecution.getStatus() == BatchStatus.COMPLETED) {
             log.info("!!! JOB FINISHED! Time to verify the results");
             Map<String, Team> teamData = new HashMap<>();
-                    em.createQuery("select  m.team1 , count(*) from Match m group by m.team1",Object[].class)
+            em.createQuery("SELECT m.Team1, COUNT(*) FROM Match m GROUP BY m.Team1", Object[].class)
                     .getResultList()
                     .stream()
                     .map(e -> new Team((String) e[0], (Long) e[1]))
                     .forEach(team -> teamData.put(team.getTeamName(),team));
 
-            em.createQuery("select  m.team2 , count(*) from Match m group by m.team2",Object[].class)
+            em.createQuery("SELECT m.Team2, COUNT(*) FROM Match m GROUP BY m.Team2", Object[].class)
                     .getResultList()
                     .stream()
                     .forEach(e -> {
@@ -47,7 +47,7 @@ public class JobCompletionNotificationListener implements JobExecutionListener {
                         team.setTotalMatches(team.getTotalMatches()+(long)e[1]);
                     });
 
-            em.createQuery("select  m.matchWinner , count(*) from Match m group by m.matchWinner",Object[].class)
+            em.createQuery("SELECT m.WinningTeam, COUNT(*) FROM Match m WHERE m.WinningTeam IS NOT NULL GROUP BY m.WinningTeam", Object[].class)
                     .getResultList()
                     .stream()
                     .forEach(e -> {

@@ -26,17 +26,17 @@ import javax.sql.DataSource;
 @EnableBatchProcessing
 public class BatchConfig {
     private final String[] FIELD_NAMES = new String[]{
-            "ID","city","date","season",
-            "match_Number","team1","team2","venue","toss_Winner",
-            "toss_Decision","super_Over","winning_Team",
-            "won_By,margin","player_Of_Match",
-            "team1_Players","team2_Players","umpire1","umpire2"
+            "ID", "City", "Date", "Season",
+            "MatchNumber", "Team1", "Team2", "Venue", "TossWinner",
+            "TossDecision", "SuperOver", "WinningTeam",
+            "WonBy", "Margin", "method", "Player_of_Match",
+            "Team1Players", "Team2Players", "Umpire1", "Umpire2"
     };
     @Bean
     public FlatFileItemReader<MatchInput> reader() {
         return new FlatFileItemReaderBuilder<MatchInput>()
                 .name("MatchItemReader")
-                .resource(new ClassPathResource("IPL_Matches_Data.csv"))
+                .resource(new ClassPathResource("Matches_Data.csv"))
                 .delimited()
                 .names(FIELD_NAMES)
                 .fieldSetMapper(new BeanWrapperFieldSetMapper<MatchInput>() {
@@ -55,8 +55,8 @@ public class BatchConfig {
     public JdbcBatchItemWriter<Match> writer(DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<Match>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-                .sql("INSERT INTO match(Id, city, date, season, matchNumber, team1, team2, venue, tossWinner, tossDecision, superOver, winningTeam, wonBy, margin, playerOfMatch, team1Players, team2Players, umpire1, umpire2) " +
-                        "VALUES (:id, :city, :date, :season, :matchNumber, :team1, :team2, :venue, :tossWinner, :tossDecision, :superOver, :winningTeam, :wonBy, :margin, :playerOfMatch, :team1Players, :team2Players, :umpire1, :umpire2)")
+                .sql("INSERT INTO match (ID, City, Date, Season, MatchNumber, Team1, Team2, Venue, TossWinner, TossDecision, SuperOver, WinningTeam, WonBy, Margin, method, Player_of_Match, Team1Players, Team2Players, Umpire1, Umpire2)" +
+                        "VALUES (:ID, :City, :Date, :Season, :MatchNumber, :Team1, :Team2, :Venue, :TossWinner, :TossDecision, :SuperOver, :WinningTeam, :WonBy, :Margin, :method, :Player_of_Match, :Team1Players, :Team2Players, :Umpire1, :Umpire2)")
                 .dataSource(dataSource)
                 .beanMapped()
                 .build();
@@ -72,7 +72,7 @@ public class BatchConfig {
                 .listener(listener)
                 .flow(step1)
                 .end()
-               // .start(step1)
+               //.start(step1)
                 .build();
     }
 

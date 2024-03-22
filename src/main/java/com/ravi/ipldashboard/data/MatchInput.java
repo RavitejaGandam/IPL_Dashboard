@@ -1,15 +1,14 @@
 package com.ravi.ipldashboard.data;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 
 @Getter
 @Setter
-
 public class MatchInput {
-        private String ID;
+        private Long ID;
         private String City;
         private String Date;
         private String Season;
@@ -23,11 +22,9 @@ public class MatchInput {
         private String WinningTeam;
         private String WonBy;
         private String Margin;
-        private String method;
         private String Player_of_Match;
         private String Team1Players;
         private String Team2Players;
         private String Umpire1;
         private String Umpire2;
-
 }

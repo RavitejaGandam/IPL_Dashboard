@@ -13,12 +13,11 @@ public class MatchDataProcessor implements ItemProcessor<MatchInput, Match> {
     @Override
     public Match process(final MatchInput matchInput) throws Exception {
         Match match = new Match();
-        match.setId(Long.parseLong(matchInput.getID()));
+        match.setID(Long.parseLong(String.valueOf(matchInput.getID())));
         match.setCity(matchInput.getCity());
         match.setDate(LocalDate.parse(matchInput.getDate()));
-        match.setPlayerOfMatch(matchInput.getPlayer_of_Match());
+        match.setPlayer_of_Match(matchInput.getPlayer_of_Match());
         match.setVenue(matchInput.getVenue());
-
         String firstInningsTeam, secondInningsTeam;
         if ("bat".equals(matchInput.getTossDecision())) {
             firstInningsTeam = matchInput.getTossWinner();
